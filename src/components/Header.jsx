@@ -16,7 +16,10 @@ export default function Header(){
       <nav style={{display:'flex', gap:12, alignItems:'center'}}>
 
         <Link to="/products" style={{color: '#c7a373'}}>Produtos</Link>
-        <Link to="/cart" style={{color: '#c7a373'}}>Carrinho ({items.length})</Link>
+        <Link to="/cart" style={{color: '#c7a373'}}> Carrinho 
+        ({Math.min(items.reduce((s, i) => s + i.qty, 0), 99)}
+        {items.reduce((s, i) => s + i.qty, 0) > 99 ? '+' : ''})
+        </Link>
 
         {user ? (
           <>
