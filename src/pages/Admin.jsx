@@ -1,34 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { getProducts } from '../api/fakeApi'
-import { useAuth } from '../contexts/AuthContext'
-import ProductCard from '../components/ProductCard'
-
-/*
- Admin area is a simulated CRUD:
- - Read products from FakeStoreAPI
- - Create/Update/Delete are simulated locally (not persisted to fakestoreapi)
- This keeps the demo safe and predictable.
-*/
+import { useLocalProducts } from '../contexts/LocalProductsContext'
 
 export default function Admin(){
-  const { user } = useAuth()
-  const [products, setProducts] = useState([])
-  const [localChanges, setLocalChanges] = useState([])
+  const { localProducts, addProduct, removeProduct } = useLocalProducts()
+  const [apiProducts, setApiProducts] = useState([])
 
-  useEffect(()=> {
-    if(!user || !user.isAdmin) return
-    getProducts().then(r=>setProducts(r.data)).catch(()=>{})
-  },[user])
+  const [title, setTitle] = useState("")
+  const [price, setPrice] = useState("")
+  const [image, setImage] = useState("") // URL da imagem ou Base64
 
-  if(!user) return <div>É necessário login.</div>
-  if(!user.isAdmin) return <div>Área restrita a administradores.</div>
+  useEffect(()=>{
+    getProducts().then(r=>setApiProducts(r.data))
+  },[])
+
+  function handleAdd(){
+    const newProduct = {
+      id: Date.now(),
+      title,
+      price: Number(price),
+      image: image || "https://via.placeholder.com/300"
+    }
+
+    addProduct(newProduct)
+
+    setTitle("")
+    setPrice("")
+    setImage("")
+  }
 
   return (
     <div>
-      <h2>Admin — Gerenciar Produtos (simulado)</h2>
-      <p>Leitura em tempo real da FakeStoreAPI. Alterações de criação/edição/exclusão são simuladas localmente no navegador.</p>
-      <div className="product-grid" style={{marginTop:12}}>
-        {products.map(p=> <div key={p.id} className="card"><h4>{p.title}</h4><p>${p.price}</p></div>)}
+      <h2>Admin — Produtos</h2>
+
+      <h3>Adicionar Produto</h3>
+      <input placeholder="Título" value={title} onChange={e=>setTitle(e.target.value)} />
+      <input placeholder="Preço" value={price} onChange={e=>setPrice(e.target.value)} />
+      <input placeholder="URL da imagem" value={image} onChange={e=>setImage(e.target.value)} />
+
+      <button onClick={handleAdd}>Adicionar</button>
+
+      <h3>Produtos (API + Locais)</h3>
+      <div className="product-grid">
+        {[...apiProducts, ...localProducts].map(p=>(
+          <div key={p.id}>
+            <img src={p.image} width={120} />
+            <h4>{p.title}</h4>
+            <p>R$ {p.price}</p>
+
+            {localProducts.some(lp=>lp.id === p.id) && (
+              <button onClick={() => removeProduct(p.id)}>Remover</button>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   )

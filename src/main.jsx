@@ -10,9 +10,11 @@ import 'primeflex/primeflex.css'
 import './App.css'
 import { CartProvider } from './contexts/CartContext'
 import { AuthProvider } from './contexts/AuthContext'
+import { LocalProductsProvider } from './contexts/LocalProductsContext'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <LocalProductsProvider>
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
@@ -20,5 +22,6 @@ createRoot(document.getElementById('root')).render(
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
+    </LocalProductsProvider>
   </React.StrictMode>
 )
