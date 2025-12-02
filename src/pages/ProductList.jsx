@@ -14,7 +14,7 @@ export default function ProductList(){
   const allProducts = [...apiProducts, ...localProducts]
 
   return (
-    <div>
+    <div className='productList'>
       <h2>Produtos</h2>
       <div className="product-grid">
         {allProducts.map(p=> <ProductCard key={p.id} product={p} />)}
