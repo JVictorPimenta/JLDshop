@@ -8,7 +8,7 @@ export default function ProductList(){
     getProducts().then(r=>setProducts(r.data)).catch(()=>{})
   },[])
   return (
-    <div>
+    <div className='productList'>
       <h2>Produtos</h2>
       <div className="product-grid">
         {products.map(p=> <ProductCard key={p.id} product={p} />)}
