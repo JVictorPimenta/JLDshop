@@ -25,7 +25,7 @@ export default function App(){
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/pagamento" element={<PaginaDePagamento />} />
-        <Route path="/confirmacao" element={<Confirmacao />} />   {/* ✅ NOVA ROTA */}
+        <Route path="/confirmacao" element={<Confirmacao />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin/*" element={<Admin />} />
       </Routes>

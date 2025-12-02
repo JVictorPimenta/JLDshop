@@ -4,15 +4,15 @@ import { Button } from 'primereact/button'
 import { Steps } from 'primereact/steps'
 import { useNavigate } from 'react-router-dom'
 
-export default function Cart(){
+export default function Cart() {
   const { items, remove, clear } = useCart()
   const navigate = useNavigate()
 
-  const total = items.reduce((s,i)=> s + i.price * i.qty, 0).toFixed(2)
+  const total = items.reduce((s, i) => s + i.price * i.qty, 0).toFixed(2)
 
   const steps = [
     { label: 'Carrinho' },
-    { label: 'Pagamento', command: () => navigate('/pagamento') },
+    { label: 'Pagamento' },
     { label: 'Confirmação' }
   ]
 
@@ -41,9 +41,8 @@ export default function Cart(){
 
           <p><strong>Total:</strong> ${total}</p>
 
-          <div style={{ display:'flex', gap:'10px', marginTop:10 }}>
+          <div style={{ display: 'flex', gap: '10px', marginTop: 10 }}>
             <Button label="Esvaziar" onClick={clear} />
-
             <Button
               label="Ir para o pagamento"
               className="p-button-success"

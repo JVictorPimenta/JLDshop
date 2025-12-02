@@ -3,7 +3,7 @@ import { Steps } from 'primereact/steps'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useCart } from '../contexts/CartContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function PaginaDePagamento() {
   const navigate = useNavigate()
@@ -14,9 +14,13 @@ export default function PaginaDePagamento() {
   const [validade, setValidade] = useState('')
   const [cvv, setCvv] = useState('')
 
-  const total = items
-    .reduce((s, i) => s + i.price * i.qty, 0)
-    .toFixed(2)
+  useEffect(() => {
+    if (items.length === 0) {
+      navigate('/cart', { replace: true })
+    }
+  }, [])
+
+  const total = items.reduce((s, i) => s + i.price * i.qty, 0).toFixed(2)
 
   const steps = [
     { label: 'Carrinho', command: () => navigate('/cart') },
@@ -24,11 +28,43 @@ export default function PaginaDePagamento() {
     { label: 'Confirmação' }
   ]
 
-  const pagamentoValido = cartao && nome && validade && cvv
+  const onlyNumbers = value => value.replace(/\D/g, '')
+  const onlyLetters = value => value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')
+
+  const handleCartao = e => {
+    const value = onlyNumbers(e.target.value)
+    setCartao(value.slice(0, 16))
+  }
+
+  const handleNome = e => {
+    setNome(onlyLetters(e.target.value))
+  }
+
+  const handleValidade = e => {
+    let value = onlyNumbers(e.target.value).slice(0, 4)
+    if (value.length >= 3) {
+      value = value.replace(/^(\d{2})(\d{1,2})/, '$1/$2')
+    }
+    setValidade(value)
+  }
+
+  const handleCvv = e => {
+    const value = onlyNumbers(e.target.value)
+    setCvv(value.slice(0, 3))
+  }
+
+  const pagamentoValido =
+    cartao.length === 16 &&
+    nome.length > 3 &&
+    validade.length === 5 &&
+    cvv.length === 3
 
   const finalizarCompra = () => {
     if (!pagamentoValido) return
-    navigate('/confirmacao')
+    navigate('/confirmacao', { replace: true })
+    setTimeout(() => {
+      window.location.reload()
+    }, 50)
   }
 
   return (
@@ -37,7 +73,6 @@ export default function PaginaDePagamento() {
 
       <h2 style={{ marginTop: 30 }}>Pagamento</h2>
 
-      {/* RESUMO DO PEDIDO */}
       <div style={{ marginBottom: 20, padding: 10, border: '1px solid #ccc' }}>
         <h4>Resumo do pedido</h4>
         {items.map(i => (
@@ -48,34 +83,32 @@ export default function PaginaDePagamento() {
         <p><strong>Total: R${total}</strong></p>
       </div>
 
-      {/* FORMULÁRIO */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <InputText
           placeholder="Número do cartão"
           value={cartao}
-          onChange={e => setCartao(e.target.value)}
+          onChange={handleCartao}
         />
 
         <InputText
           placeholder="Nome no cartão"
           value={nome}
-          onChange={e => setNome(e.target.value)}
+          onChange={handleNome}
         />
 
         <InputText
           placeholder="Validade (MM/AA)"
           value={validade}
-          onChange={e => setValidade(e.target.value)}
+          onChange={handleValidade}
         />
 
         <InputText
           placeholder="CVV"
           value={cvv}
-          onChange={e => setCvv(e.target.value)}
+          onChange={handleCvv}
         />
       </div>
 
-      {/* BOTÕES */}
       <div style={{ marginTop: 20, display: 'flex', gap: 10 }}>
         <Button
           label="Voltar"
