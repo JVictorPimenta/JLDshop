@@ -1,0 +1,208 @@
+/* Register.css */
+
+.register-container {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .register-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    max-width: 440px;
+    width: 100%;
+    border-left: 4px solid #10b981; /* Verde para diferenciar do login */
+    border-right: 1px solid #d1fae5;
+    border-top: 1px solid #d1fae5;
+    border-bottom: 1px solid #d1fae5;
+    transition: all 0.3s ease;
+  }
+  
+  .register-card:hover {
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.15);
+  }
+  
+  .register-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .register-header h2 {
+    color: #047857;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: linear-gradient(90deg, #047857 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .register-subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+  
+  .register-form {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  .input-group {
+    position: relative;
+  }
+  
+  .register-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #d1fae5;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    color: #334155;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  
+  .register-input:focus {
+    border-color: #10b981;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+  
+  .register-input::placeholder {
+    color: #94a3b8;
+  }
+  
+  .input-hint {
+    color: #64748b;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+  }
+  
+  .register-button {
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.5rem;
+  }
+  
+  .register-button:hover {
+    background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+  }
+  
+  .register-button:active {
+    transform: translateY(0);
+  }
+  
+  .register-footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .login-link {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-link a {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .login-link a:hover {
+    color: #059669;
+    text-decoration: underline;
+  }
+  
+  .password-requirements {
+    background: #ecfdf5;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid #d1fae5;
+    text-align: left;
+  }
+  
+  .requirements-title {
+    color: #047857;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .requirements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .requirements-list li {
+    color: #475569;
+    font-size: 0.85rem;
+    padding: 0.25rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  
+  .requirements-list li:before {
+    content: "○";
+    position: absolute;
+    left: 0;
+    color: #94a3b8;
+  }
+  
+  .requirements-list li.requirement-met {
+    color: #047857;
+  }
+  
+  .requirements-list li.requirement-met:before {
+    content: "✓";
+    color: #10b981;
+  }
+  
+  /* Validação visual em tempo real */
+  .register-input:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: #ef4444;
+  }
+  
+  .register-input:valid:not(:focus):not(:placeholder-shown) {
+    border-color: #10b981;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 480px) {
+    .register-card {
+      padding: 1.5rem;
+    }
+    
+    .register-header h2 {
+      font-size: 1.75rem;
+    }
+    
+    .register-form {
+      gap: 1rem;
+    }
+  }
