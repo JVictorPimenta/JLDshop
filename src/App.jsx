@@ -7,10 +7,11 @@ import ProductDetail from './pages/ProductDetail'
 import CartPage from './pages/Cart'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
+import Register from './pages/Register'       // ⬅️ IMPORTAR AQUI
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PaginaDePagamento from './pages/PaginaDePagamento'
-import Confirmacao from './pages/Confirmacao'   // ✅ NOVO IMPORT
+import Confirmacao from './pages/Confirmacao'
 import TesteSteps from './pages/TesteSteps';
 
 export default function App(){
@@ -25,8 +26,11 @@ export default function App(){
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/pagamento" element={<PaginaDePagamento />} />
-        <Route path="/confirmacao" element={<Confirmacao />} />   {/* ✅ NOVA ROTA */}
+        <Route path="/confirmacao" element={<Confirmacao />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />  {/* ✅ ROTA ADICIONADA */}
+
         <Route path="/admin/*" element={<Admin />} />
       </Routes>
 

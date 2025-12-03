@@ -2,27 +2,28 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-export default function Login(){
+export default function Register(){
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useAuth()
+  const { register } = useAuth()
   const navigate = useNavigate()
 
   const submit = (e) => {
     e.preventDefault()
-    const result = login(username, password)
+    const result = register(username, password)
 
     if (!result.success) {
-      alert("Usuário ou senha incorretos!")
+      alert(result.message)
       return
     }
 
-    navigate('/')
+    alert("Cadastro realizado com sucesso!")
+    navigate('/login')
   }
 
   return (
     <div style={{maxWidth:420}}>
-      <h2>Login</h2>
+      <h2>Criar Conta</h2>
 
       <form onSubmit={submit} style={{display:'grid',gap:8}}>
         <input
@@ -36,14 +37,10 @@ export default function Login(){
           value={password}
           onChange={e=>setPassword(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+        <button type="submit">Cadastrar</button>
       </form>
 
-      <p>
-        Não tem conta? <Link to="/register">Cadastre-se</Link>
-      </p>
-
-      <p>Dica: admin = Admin / senha = João10/10</p>
+      <p>Já possui conta? <Link to="/login">Entrar</Link></p>
     </div>
   )
 }
