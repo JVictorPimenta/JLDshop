@@ -36,7 +36,7 @@ export default function PaginaDePagamento() {
   function validarCartao(e) {
     let valor = e.target.value.replace(/\D/g, '')
     if (valor.length > 16) {
-      erro("O cartão deve ter 16 dígitos.")
+      erro("Máximo de 16 números.")
       return
     }
     setCartao(valor)
@@ -45,7 +45,7 @@ export default function PaginaDePagamento() {
   function validarNome(e) {
     const valor = e.target.value
     if (!/^[A-Za-zÀ-ú ]*$/.test(valor)) {
-      erro("O nome deve conter apenas letras.")
+      erro("Somente letras.")
       return
     }
     setNome(valor)
@@ -66,74 +66,23 @@ export default function PaginaDePagamento() {
   function validarCVV(e) {
     const valor = e.target.value.replace(/\D/g, '')
     if (valor.length > 3) {
-      erro("O CVV deve conter 3 números.")
+      erro("Máximo 3 números.")
       return
     }
     setCvv(valor)
   }
 
-  function luhn(cartao) {
-    let soma = 0
-    let alternar = false
-
-    for (let i = cartao.length - 1; i >= 0; i--) {
-      let n = parseInt(cartao[i])
-      if (alternar) {
-        n *= 2
-        if (n > 9) n -= 9
-      }
-      soma += n
-      alternar = !alternar
-    }
-    return soma % 10 === 0
-  }
-
-  function validarCampos() {
-    if (cartao.length !== 16) {
-      erro("O cartão deve conter 16 dígitos.")
-      return false
-    }
-
-    if (!luhn(cartao)) {
-      erro("Número do cartão inválido.")
-      return false
-    }
-
-    if (nome.trim().split(" ").length < 2) {
-      erro("Digite o nome completo.")
-      return false
-    }
-
-    if (!/^\d{2}\/\d{2}$/.test(validade)) {
-      erro("Validade deve ser no formato MM/AA.")
-      return false
-    }
-
-    const [mes, ano] = validade.split("/").map(Number)
-    if (mes < 1 || mes > 12) {
-      erro("Mês da validade inválido.")
-      return false
-    }
-
-    const hoje = new Date()
-    const anoAtual = hoje.getFullYear() % 100
-    const mesAtual = hoje.getMonth() + 1
-
-    if (ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
-      erro("Cartão expirado.")
-      return false
-    }
-
-    if (cvv.length !== 3) {
-      erro("CVV deve conter 3 dígitos.")
-      return false
-    }
-
-    return true
-  }
+  const pagamentoValido =
+    cartao.length >= 10 &&
+    nome.trim().length >= 3 &&
+    validade.length === 5 &&
+    cvv.length === 3
 
   const finalizarCompra = () => {
-    if (!validarCampos()) return
+    if (!pagamentoValido) {
+      erro("Preencha todos os dados corretamente.")
+      return
+    }
     navigate('/confirmacao')
   }
 
