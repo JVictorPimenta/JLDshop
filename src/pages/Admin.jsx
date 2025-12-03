@@ -19,12 +19,10 @@ export default function Admin() {
   const [apiProducts, setApiProducts] = useState([])
   const toast = React.useRef(null)
 
-  // Modal states
   const [showAddModal, setShowAddModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
 
-  // Campos do produto
   const [title, setTitle] = useState("")
   const [price, setPrice] = useState(null)
   const [image, setImage] = useState("")
@@ -222,14 +220,12 @@ export default function Admin() {
     <div className="admin-container p-4">
       <Toast ref={toast} position="top-right" />
       
-      {/* TOOLBAR */}
       <Toolbar 
         className="mb-4 border-blue-200"
         left={leftToolbarTemplate} 
         right={rightToolbarTemplate}
       />
 
-      {/* MODAL DE ADIÇÃO */}
       <Dialog 
         header={
           <div className="flex align-items-center gap-2">
@@ -316,7 +312,6 @@ export default function Admin() {
         </div>
       </Dialog>
 
-      {/* MODAL DE EDIÇÃO */}
       <Dialog 
         header={
           <div className="flex align-items-center gap-2">
@@ -406,7 +401,6 @@ export default function Admin() {
         </div>
       </Dialog>
 
-      {/* PRODUCTS LIST */}
       <Card className="border-blue-100">
         <div className="mb-4">
           <h3 className="text-blue-700 m-0">
