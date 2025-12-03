@@ -13,8 +13,19 @@ export function LocalProductsProvider({ children }) {
     setLocalProducts(prev => prev.filter(p => p.id !== id));
   }
 
+  function updateProduct(id, updatedProduct) {
+    setLocalProducts(prev => 
+      prev.map(p => p.id === id ? { ...p, ...updatedProduct } : p)
+    );
+  }
+
   return (
-    <LocalProductsContext.Provider value={{ localProducts, addProduct, removeProduct }}>
+    <LocalProductsContext.Provider value={{ 
+      localProducts, 
+      addProduct, 
+      removeProduct,
+      updateProduct 
+    }}>
       {children}
     </LocalProductsContext.Provider>
   );
